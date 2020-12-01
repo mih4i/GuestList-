@@ -1,0 +1,171 @@
+[P1] Sistem de gestiune inscrieri
+Fiind deja un programator software in devenire, echipa Devmind apeleaza la tine 
+pentru ajutor in implementarea unui sistem back-end responsabil cu gestiunea listei de 
+participanti. Acest tool va fi deosebit de util pentru procesarea automata a persoanelor 
+care doresc sa participe in diversele activitati educationale organizate, de tipul 
+evenimentului Cum sa incepi o cariera in IT. Aplicatia trebuie sa indeplineasca un set 
+complet de functionalitati, pe care inginerii din echipa vi le detaliaza in continuare.
+
+Specificatii tehnice
+Aplicatia va fi alcatuita din 3 parti componente:
+
+o reprezentare a unui participant - clasa Guest
+o clasa care implementeaza gestiunea listei de participanti - clasa GuestsList
+o clasa principala, care reprezinta motorul aplicatiei. Aceasta va accepta comenzi de 
+la utilizator, va efectua actiunile potrivite asupra listelor de participare si va 
+raspunde la interogari. - clasa Main
+Class 'Guest'
+Un invitat va fi definit in sistem prin urmatoarele campuri, aferente Formularului de 
+inscriere la eveniment:
+
+	-last name
+	-first name
+	-email
+	-phone number
+In functie de actiunile necesare in cadrul aplicatiei, va trebui sa implementezi un 
+set de metode aferente clasei Guest. Citeste in continuare specificatiile sistemului 
+si implementeaza treptat functionalitatea necesara fiecarei entitati in parte.
+
+Class 'GuestsList'
+Aceasta clasa va tine evidenta inscrierilor la un eveniment. Prin urmare, va contine 
+(cel putin) urmatoarele detalii: numarul de locuri disponibile la eveniment 
+(i.e. numar oferit la initializare), lista de participanti si persoane aflate in
+ asteptare.
+
+Clasa va implementa urmatoarele functionalitati:
+
+adaugarea unei noi persoane (inscrise)
+Obs: se verifica daca persoana respectiva nu este deja inscrisa la eveniment
+cautarea persoanei se poate face dupa:
+	-lastName si firstName SAU
+	-email SAU
+	-phoneNumber
+la adaugare, persoana inscrisa va fi notificata corespunzator, in functie de lista 
+in care a fost inscrisa:
+Obs: notificarea se face prin afisarea la tastatura a unui mesaj simplu:
+confirmare participare → "Felicitari! Locul tau la eveniment este confirmat. Te asteptam!."
+lista de asteptare → "Te-ai inscris cu succes in lista de asteptare si ai primit numarul 
+de ordine <X>. Te vom notifica daca un loc devine disponibil."
+
+metoda va returna o valoare intreaga, astfel:
+	- -1 - daca persoana a fost deja inscrisa la eveniment
+	- 0 - daca a primit un loc la eveniment
+	- X - daca persoana este pe locul X in lista de asteptare
+determina daca o persoana este inscrisa la eveniment (in oricare lista).
+cautarea persoanei se poate face dupa:
+lastName si firstName SAU
+email SAU
+phoneNumber
+Obs: clasa va permite cautarea unui participant dupa fiecare criteriu mai sus mentionat
+eliminarea unei persoane (inscrise)
+cautarea persoanei se poate face dupa:
+lastName si firstName SAU
+email SAU
+phoneNumber
+Obs: clasa va permite cautarea si respectiv eliminarea unui participant dupa fiecare 
+criteriu mai sus mentionat
+se va intoarce o valoare boolean, astfel:
+true - persoana a fost stearsa cu succes
+false - eroare: persoana nu era inscrisa
+Obs: persoana se poate afla atat pe lista participantilor cat si pe cea de asteptare
+Obs2: daca o persoana este stearsa din lista de participare si exista persoane in lista 
+de asteptare, prima persoana din lista de asteptare va fi (1) mutata in lista de 
+participare si (2) notificata in acest sens. Notificarea se face conform specificatiilor 
+de mai sus.
+actualizarea detaliilor unei persoane inscrise
+oricare dintre campuri poate fi actualizat
+cautarea persoanei se poate face dupa:
+	-lastName si firstName
+	-email
+	-phoneNumber
+	
+Obs: clasa va permite cautarea si respectiv actualizarea unui participant dupa fiecare 
+criteriu mai sus mentionat
+obtinerea listei de persoane care au loc la eveniment (i.e. lista de participare)
+obtinerea listei de persoane din lista de asteptare
+obtinerea numarului de locuri disponibile
+Obs: 0 daca nu mai sunt locuri libere in lista de participare
+obtinerea numarului de persoane participante (i.e. aflate in lista de participare)
+obtinerea numarului de persoane din lista de asteptare
+obtinerea numarului total de persoane
+cautare partiala, dupa un subsir de caractere:
+metoda primeste ca parametru un sir de caractere. Acesta este cautat oriunde in cadrul 
+contactului (i.e. in fiecare camp, incepand cu orice pozitie).
+se returneaza o lista de contacte care indeplinesc criteriile de cautare
+lista vida indica lipsa persoanelor
+Obs: cautarea este case insensitive
+Exemplu: pentru subsirul dra, se vor intoarce contacte precum
+Contact 1: contine email = Roxy.Dragomir1_1@gmail.com
+Contact 2: contine firstName = Andra
+etc.
+Class 'Main'
+Clasa Main reprezinta clasa principala a aplicatiei, responsabila de interactiunea cu 
+utilizatorul. Aceasta va implementa functionalitatea de procesare a input-ului dat 
+aplicatiei, indrumarea utilizatorului pentru introducerea corecta a comenzilor de 
+intrare, afisarea comenzilor disponibile etc.
+
+Functionalitate
+Similar cu orice aplicatie moderna, folosita in linia de comanda, sistemul de 
+gestiune al inscrierilor va oferi utilizatorului un set de comenzi posibile si o 
+comanda de inchidere a aplicatiei. Programul va primi comenzi (si va raspunde , 
+pe rand, fiecarei comenzi in parte) pana la primirea comenzii de inchidere. 
+Setul de comenzi pe care programul il poate primi este prezentat in continuare. 
+Se observa faptul ca acestea sunt in conformitate cu actiunile implementate de clasa 
+GuestsList, prin urmare implementarea acestora se va baza pe apelarea metodelor clasei 
+GuestsList.
+
+Setul de comenzi
+Fiecare comanda va fi reprezentata printr-un sir de caractere, fara spatii, 
+dupa cum urmeaza:
+
+Console
+help         - Afiseaza aceasta lista de comenzi
+add          - Adauga o noua persoana (inscriere)
+check        - Verifica daca o persoana este inscrisa la eveniment
+remove       - Sterge o persoana existenta din lista
+update       - Actualizeaza detaliile unei persoane
+guests       - Lista de persoane care participa la eveniment
+waitlist     - Persoanele din lista de asteptare
+available    - Numarul de locuri libere
+guests_no    - Numarul de persoane care participa la eveniment
+waitlist_no  - Numarul de persoane din lista de asteptare
+subscribe_no - Numarul total de persoane inscrise
+search       - Cauta toti invitatii conform sirului de caractere introdus
+quit         - Inchide aplicatia
+
+Dupa introducerea comenzii dorite de catre utilizator, aplicatia va cere, pe rand 
+datele necesare indeplinirii comenzii. Actiunile care primesc date de intrare sunt 
+descrise in continuare:
+
+add:
+utilizatorul va introduce pe rand toate campurile aferente clasei Guest, cu ajutorul 
+carora se va construi un nou obiect Guest
+check:
+utilizatorul va fi invitat initial sa aleaga optiunea dupa care se face cautarea:
+lastName si firstName
+email
+phoneNumber
+ulterior, in functie de criteriul ales, se va introduce sirul / sirurile de caracter specifice cautarii
+remove:
+pentru identificarea persoanei de sters, se va utiliza procedura descrisa la comanda check
+update:
+pentru identificarea persoanei de actualizat, se va utiliza procedura descrisa la comanda check
+ulterior, utilizatorul va alege campul care trebuie actualizat:
+	-lastName
+	-firstName
+	-email
+	-phoneNumber
+la final, va introduce noua valoare pentru campul ales
+search:
+primeste ca parametru un sir de caractere
+Conceptul de delegare
+Observam ca, din punct de vedere functional, toate metodele clasei Main vor apela in 
+continuare actiunile implementate de clasa GuestsList pentru indeplinirea actiunii cerute. Cu alte cuvinte, metodele clasei Main nu implementeaza efectiv functionalitatea ci au doar rolul de a delega alta / alte entitati (specializate) in a rezolva efectiv sarcina.
+
+In programare, comportamentul prin care o metoda „paseaza“ responsabilitatea de a
+ realiza efectiv o anumita sarcina se numeste delegare (eng: delegate). In general
+  in astfel de situatii, metoda care deleaga va indeplini doar urmatoarele actiuni:
+   (1) va procesa datele necesare pentru a putea apela metoda / metodele delegate, 
+   (2) va realiza apelul efectiv si 
+   (3) ulterior executiei va procesa datele returnate pentru a oferi rezultatul dorit 
+   (ex: in formatul dorit).
