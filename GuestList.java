@@ -2,19 +2,20 @@ package project_1;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GuestList implements Serializable{
 	private final int numarLocuri;
-	private ArrayList<Guest> guestList;
-	private ArrayList<Guest> waitList;
-	
+	private List<Guest> guestList;
+	private List<Guest> waitList = new LinkedList<>();
+
 	private static final long serialVersionUID = 1L;
 
 	//constructori
 	public GuestList(int numarLocuri) {
 		this.numarLocuri = numarLocuri;
-		this.guestList = new ArrayList<Guest>(this.numarLocuri);
-		this.waitList = new ArrayList<Guest>(this.numarLocuri*2);
+		this.guestList = new ArrayList<>(this.numarLocuri);
 	}
 
 	//metoda de adaugare participant
@@ -49,7 +50,7 @@ public class GuestList implements Serializable{
 	}
 		
 	//verifica
-	public String check(String criteriu, ArrayList<Guest> lista) {
+	public String check(String criteriu, List<Guest> lista) {
 		//itereaza prin lista
 		if(!lista.isEmpty()) {
 			for(int i = 0; i < lista.size(); i++) {
@@ -70,7 +71,7 @@ public class GuestList implements Serializable{
 		//verificare in functie de nume, email sau numar de telefon
 		
 		//verificare in functie de nume
-		ArrayList<Guest> lista;
+		List<Guest> lista;
 		String field = check(removePerson, this.guestList);
 		if(!field.equals("Empty")) {
 			lista = this.guestList;
@@ -110,7 +111,7 @@ public class GuestList implements Serializable{
 	
 	//returneaza indexul obiectului care are 
 	//numele sau emailul sau nr de telefon identic cu parametrul dat
-	private int getIndex(String criteriu, ArrayList<Guest> lista) {
+	private int getIndex(String criteriu, List<Guest> lista) {
 		for(int i = 0; !lista.isEmpty() && i < lista.size(); i++) {
 			if(lista.get(i).getName().equals(criteriu)) {
 				return i;
@@ -174,8 +175,8 @@ public class GuestList implements Serializable{
 	
 	//searches for the given keyword and return an array with all the 
 	//objects meeting the criteria in whichever field
-	public ArrayList<Guest> search(String searchWord){
-		ArrayList<Guest> result = new ArrayList<Guest>();
+	public LinkedList<Guest> search(String searchWord){
+		LinkedList<Guest> result = new LinkedList<Guest>();
 		//searches substring in guestList
 		for(int i = 0; !this.guestList.isEmpty() && i < this.guestList.size(); i++) {
 			Guest guest = this.guestList.get(i);
@@ -218,12 +219,12 @@ public class GuestList implements Serializable{
 	}
 	
 	//lista cu participanti
-	public ArrayList<Guest> guests() {
+	public List<Guest> guests() {
 		return this.guestList;
 	}
 	
 	//lista de asteptare
-	public ArrayList<Guest> waitlist() {
+	public List<Guest> waitlist() {
 		return this.waitList;
 	}
 	
@@ -242,9 +243,8 @@ public class GuestList implements Serializable{
 		return this.waitList.size();
 	}
 	
-	//numarul de persoane de pe lista de asteptare
+	//numarul de persoane inscrise in total la eveniment
 	public int subscribe_no() {
 		return this.guestList.size() + this.waitList.size();
 	}
-
 }
