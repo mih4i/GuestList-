@@ -21,7 +21,6 @@ public class Guest implements Serializable{
 	}
 
 	//Metode
-	
 	public boolean intersects(Object obj) {
 		if(this == obj) {
 			return true;

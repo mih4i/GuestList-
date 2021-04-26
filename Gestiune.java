@@ -2,8 +2,6 @@ package project_1;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.Closeable;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,9 +13,10 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
-public class Main{
+public class Gestiune {
 	private static final Scanner input = new Scanner(System.in);
 	private static GuestList guestList;
 	
@@ -27,11 +26,10 @@ public class Main{
 				guestList = deSerialize();
 				System.out.println("Sesiunea a fost reluata de la ultima salvare a datelor.");
 			}
-		} catch (IOException e) {
+		}catch(IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Intoduceti numarul de invitati.");
 			guestList = new GuestList(input.nextInt());
-			e.printStackTrace();
 		}
 	}
 	
@@ -139,7 +137,6 @@ public class Main{
 				System.out.println("Tipul de date introdus nu este corect. Introduceti un sir de caractere.");
 			}
 		}
-		
 	}
 	
 	public static void remove() {
@@ -223,7 +220,7 @@ public class Main{
 	
 	
 	public static void guests() {
-		ArrayList<Guest> guests = guestList.guests();
+		List<Guest> guests = guestList.guests();
 		System.out.println("-->Lista de participanti.");
 		for(Guest guest : guests) {
 			System.out.println(guest.getName() + " " + guest.getEmail() + " "
@@ -232,7 +229,8 @@ public class Main{
 	}
 	
 	public static void waitlist() {
-		ArrayList<Guest> waitList = guestList.waitlist();
+		List<Guest> waitList = guestList.waitlist();
+
 		System.out.println("-->Lista de asteptare.");
 		for(Guest guest : waitList) {
 			System.out.println(guest.getName() + " " + guest.getEmail() + " "
@@ -242,7 +240,7 @@ public class Main{
 	
 	
 	public static void available() {
-		System.out.println("Numar de locuri nedistribuit este " + guestList.available());
+		System.out.println("Numarul de locuri nedistribuit este " + guestList.available());
 	}
 	
 	public static void guests_no() {
@@ -266,7 +264,7 @@ public class Main{
 			
 			try {
 				String searchString= input.nextLine();
-				ArrayList<Guest> resultArr = guestList.search(searchString);
+				List<Guest> resultArr = guestList.search(searchString);
 				System.out.println("Urmatoarea lista incorporeaza substring-ul '" + searchString +"' pe unul din campuri.");
 				for(Guest iterator : resultArr) {
 					System.out.println(iterator.getName() + " " + iterator.getEmail() 
@@ -324,7 +322,9 @@ public class Main{
 		
 		for (char c : name.toLowerCase().toCharArray()) {
 			if(c < 'a' || c > 'z') {
-				return false;
+				if(c != ' ') {
+					return false;
+				}
 			}
 		}
 		return true;
@@ -335,7 +335,7 @@ public class Main{
 			return false;
 		}
 		
-		if(!email.contains("@") || !email.contains(".")) { 
+		if(!email.contains("@") || !email.contains(".")) {
 			return false;
 		}
 		
@@ -364,7 +364,7 @@ public class Main{
 
 		System.out.println("Introduceti codul uneia dintre comenzile de mai jos.");
 		int choice = 0;
-		do {
+		while(true) {
 			switch(choice) {
 				case 0:
 					help();
@@ -410,7 +410,7 @@ public class Main{
 					quit();
 					break;
 				default:
-					System.out.println("Oops! Ati introdus un cod gresit.\nIntroduceti un numar de la 0 la 13.");
+					System.out.println("1Oops! Ati introdus un cod gresit.\nIntroduceti un numar de la 0 la 13.");
 					break;
 			}
 			System.out.println("Introduceti urmatoarea comanda.");
@@ -419,7 +419,8 @@ public class Main{
 			}catch(InputMismatchException e) {
 				input.nextLine();
 				System.out.println("Oops! Ati introdus un cod gresit.\nIntroduceti un numar de la 0 la 13.");
+				choice = 0;
 			}
-		}while(true);
+		}
 	}
 }
